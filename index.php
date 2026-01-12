@@ -1,0 +1,623 @@
+<?php
+// index.php - Industrial Awareness Program Portal (SPECANCIENS)
+if (isset($_GET['success'])) {
+    echo "<script>alert('Registration successful!');</script>";
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Industrial Awareness Program Portal | SPECANCIENS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background: #fbfcff;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #f3e8ff;
+            color: #5b21b6;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Header */
+        .main-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* 🔼 LOGO SIZE INCREASED */
+        .assoc-logo {
+            width: 150px;
+            border-radius: 30px;
+        }
+
+        .assoc-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #5b21b6;
+            letter-spacing: 1px;
+        }
+
+        .assoc-tagline {
+            font-size: 20px;
+            font-weight: 700;
+            color: #6b7280;
+        }
+
+        .nav-links a {
+            margin-left: 22px;
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #7c3aed;
+            border-bottom: 2px solid #fca5a5;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            padding: 90px 0;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        /* 🎨 COLOR CHANGED */
+        .hero-text h2 {
+            font-size: 40px;
+            color: #7a1fa2; /* dark purple-pink */
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            max-width: 540px;
+            font-size: 16px;
+            color: #4b5563;
+        }
+
+        .hero-buttons {
+            margin-top: 28px;
+        }
+
+        .primary-btn {
+            background: #7c3aed;
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size:18px; 
+            cursor: pointer;
+        }
+
+        .secondary-btn {
+            background: #7c3aed;
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size:18px; 
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 16px;
+        }
+        .hero-desc{
+        font-size:30px;
+        font-weight:600;   /* increase size */
+        line-height:1.7;  /* better readability */
+            }
+
+
+        /* Sections */
+        .section {
+            padding: 75px 0;
+        }
+
+        .section-alt {
+            background: #f8fafc;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            color: #5b21b6;
+            margin-bottom: 15px;
+        }
+
+        /* Year Cards */
+        .year-grid {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            align-items: start;
+        }
+
+        .year-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .year-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+        }
+
+        .year-card h3 {
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+
+        .year-card p {
+            font-size: 14px;
+            color: #4b5563;
+            margin-bottom: 14px;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .pill-blue { background: #e0e7ff; color: #1e3a8a; }
+        .pill-green { background: #dcfce7; color: #166534; }
+        .pill-orange { background: #ffedd5; color: #9a3412; }
+        .pill-purple { background: #f3e8ff; color: #6b21a8; }
+
+        .outline-btn {
+            background: #fdf2f8;
+            border: 2px solid #7c3aed;
+            color: #7c3aed;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .outline-btn:hover {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .footer {
+            background: #7c3aed;
+            color: #fff;
+            text-align: center;
+            padding: 18px 0;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-links {
+                display: none;
+            }
+
+        }
+       /* Contact description */
+.contact-desc{
+    font-size:20px;
+    font-weight:600;
+    color:#4b5563;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+/* ICON ROW CONTAINER */
+.contact-icons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+/* INDIVIDUAL ICON STYLE */
+.contact-icon{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#5b21b6;
+    font-size:20px;
+    text-decoration:none;
+    transition:0.3s ease;
+}
+
+.contact-icon:hover{
+    background:#7c3aed;
+    color:#ffffff;
+    transform:translateY(-3px);
+}
+
+/* Registration Form */
+.registration-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.registration-form label {
+    font-weight: 600;
+    color: #5b21b6;
+}
+
+.registration-form input, .registration-form select, .registration-form textarea {
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.registration-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.registration-form button {
+    align-self: flex-start;
+}
+
+
+.toggle-sessions{
+    background:#fdf2f8;
+    border:2px solid #7c3aed;
+    color:#7c3aed;
+    padding:8px 18px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    margin-top:10px;
+}
+
+.toggle-sessions:hover{
+    background:#7c3aed;
+    color:#fff;
+}
+
+.session-list{
+    list-style:none;
+    padding-left:0;
+    margin-top:10px;
+    display:none; /* hidden by default */
+}
+
+.session-list li{
+    background:#f8f4ff;
+    padding:8px 12px;
+    border-radius:8px;
+    margin-bottom:6px;
+    color:#4b5563;
+    font-size:14px;
+}
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    
+</div>
+
+<header class="main-header">
+    <div class="container header-content">
+        <div class="logo-block">
+            <img src="images/SA Main logo.jpg" class="assoc-logo" alt="SPECANCIENS Logo">
+            <div>
+                <h1 class="assoc-name">SPECANCIENS</h1>
+                <p class="assoc-tagline">The Alumni Association of SPEC'HYD</p>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="https://www.specanciens.com">About</a>
+            <a href="#years">Modules</a>
+            <a href="#contact">Contact</a>
+            <a href ="Admin/admin_dashboard.php">Admin Login</a>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="container hero-content">
+        <div class="hero-text">
+            <h2>Industrial Awareness Program Portal</h2>
+            <p class = "hero-desc">
+                A structured alumni-driven roadmap helping students
+                understand industry expectations and prepare confidently for careers.
+            </p>
+            <div class="hero-buttons">
+                <!-- 🔗 REDIRECT FIXED -->
+                <a href="#years">
+                    <button class="primary-btn">View Year-wise Plan</button>
+                </a>
+                <a href="#about">
+                    <button class="secondary-btn">Session Registration</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img src="images/industry awareeness.jpg" alt="Industrial Awareness">
+        </div>
+    </div>
+</section>
+
+<section id="years" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Year-wise Modules</h2>
+
+        <div class="year-grid">
+            <div class="year-card">
+                <h3>Year 1</h3>
+                <p>Career awareness, fundamentals, ideathons, communication skills, resume & LinkedIn basics.</p>
+                <span class="pill pill-blue">Foundation</span><br>
+                <button class="outline-btn toggle-sessions">View Details</button>
+                <ul class="session-list">
+                    <li>Introduction to Engineering Careers</li>
+                    <li>How to Ace Ideathons</li>
+                    <li>What is Problem-Solving?</li>
+                    <li>Emerging Technologies Overview</li>
+                    <li>Soft Skills: Communication & Teamwork</li>
+                    <li>College to Career Transition</li>
+                    <li>Resume Building Basics</li>
+                    <li>Industry Standards, Ethics & Workplace Communication</li>
+                    <li>Roles, Responsibilities & Career Pathways in Industry</li>
+                    <li>LinkedIn Profile Basics</li>
+                </ul>
+            </div>
+
+            <div class="year-card">
+                <h3>Year 2</h3>
+                <p>Professional skills, hackathons, coding platforms, certifications, time management.</p>
+                <span class="pill pill-green">Skill Building</span><br>
+                <button class="outline-btn toggle-sessions">View Details</button>
+                <ul class="session-list">
+                    <li>Career Awareness Workshop</li>
+                    <li>Communication Skills Seminar</li>
+                    <li>Resume & LinkedIn Basics</li>
+                    <li>Ideathon Introduction</li>
+                    <li>Career Awareness Workshop</li>
+                    <li>Communication Skills Seminar</li>
+                    <li>Resume & LinkedIn Basics</li>
+                    <li>Ideathon Introduction</li>
+                    <li>Resume & LinkedIn Basics</li>
+                    <li>Ideathon Introduction</li>
+                </ul>
+            </div>
+
+            <div class="year-card">
+                <h3>Year 3</h3>
+                <p>Internship readiness, interview mastery, GitHub portfolio, placement preparation.</p>
+                <span class="pill pill-orange">Career Ready</span><br>
+                <button class="outline-btn toggle-sessions">View Details</button>
+                <ul class="session-list">
+                    <li>Career Paths Beyond Campus Placements</li>
+                    <li>Confidence Building in High-Pressure Situations</li>
+                    <li>Project Presentation & Demo Skills</li>
+                    <li>Internship to Full-Time Conversion</li>
+                    <li>Salary Negotiation & Career Economics</li>
+                    <li>Advanced Job Search Strategy & Placement Mastery</li>
+                    <li>Core vs Non-Core Career Paths & Specialization</li>
+                    <li>Advanced Interview Essentials & Preparation Strategy</li>
+                    <li>GitHub Portfolio & Open Source Contribution</li>
+                    <li>Managing Academics, Placements & Growth</li>
+                </ul>
+            </div>
+
+            <div class="year-card">
+                <h3>Year 4</h3>
+                <p>Leadership, system design, global opportunities, higher studies & contingency planning.</p>
+                <span class="pill pill-purple">Mastery</span><br>
+                <button class="outline-btn toggle-sessions">View Details</button>
+                <ul class="session-list">
+                    <li>Advanced System Design & Scalability</li>
+                    <li>Specialization Deep Dive</li>
+                    <li>Startup Ecosystem & Entrepreneurship</li>
+                    <li>Research & Innovation in Engineering</li>
+                    <li>Advanced Leadership & Management</li>
+                    <li>Industry Certifications & Strategic Learning Roadmap</li>
+                    <li>Global Opportunities & Remote Work</li>
+                    <li>Real-World Project Development</li>
+                    <li>Personal Branding & Personal Development</li>
+                    <li>Alternative Paths & Contingency Planning</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="about" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Session Registration</h2>
+        <form action="register.php" method="post" class="registration-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="roll_number">Roll Number:</label>
+            <input type="text" id="roll_number" name="roll_number" required>
+
+            <label for="year">Year:</label>
+            <select id="year" name="year" required>
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+            </select>
+
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="session_desired">Session Desired:</label>
+            <select id="session_desired" name="session_desired" required>
+                <option value="Career Awareness Workshop">Career Awareness Workshop</option>
+                <option value="Communication Skills Seminar">Communication Skills Seminar</option>
+                <option value="Resume & LinkedIn Basics">Resume & LinkedIn Basics</option>
+                <option value="Ideathon Introduction">Ideathon Introduction</option>
+                <option value="Hackathon Participation">Hackathon Participation</option>
+                <option value="Coding Platform Training">Coding Platform Training</option>
+                <option value="Certification Guidance">Certification Guidance</option>
+                <option value="Time Management Workshop">Time Management Workshop</option>
+                <option value="Internship Preparation">Internship Preparation</option>
+                <option value="Interview Skills Training">Interview Skills Training</option>
+                <option value="GitHub Portfolio Building">GitHub Portfolio Building</option>
+                <option value="Placement Strategy Session">Placement Strategy Session</option>
+                <option value="Leadership Development">Leadership Development</option>
+                <option value="System Design Workshop">System Design Workshop</option>
+                <option value="Global Opportunities Exploration">Global Opportunities Exploration</option>
+                <option value="Higher Studies Guidance">Higher Studies Guidance</option>
+            </select>
+
+            <label for="other_query">Any Other Query:</label>
+            <textarea id="other_query" name="other_query"></textarea>
+
+            <button type="submit" class="primary-btn">Submit Registration</button>
+        </form>
+    </div>
+</section>
+<section id = "contact" class ="section">
+    <div class = "container">
+        <h2 class="section-title">Contact US</h2>
+
+       <p class="contact-desc">
+    Stay connected with SPECANCIENS through our official platforms.
+</p>
+
+<div class="contact-icons">
+
+    <a href="https://www.linkedin.com/in/specanciens" target="_blank" class="contact-icon">
+        <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.instagram.com/specanciens" target="_blank" class="contact-icon">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="https://www.facebook.com/specanciens" target="_blank" class="contact-icon">
+        <i class="fa-brands fa-facebook-f"></i>
+    </a>
+
+    <a href="https://www.youtube.com/channel/UC9UAHqxl6zzw5BGH3sobyTg" target="_blank" class="contact-icon">
+        <i class="fa-brands fa-youtube"></i>
+    </a>
+
+    <a href="mailto:specanciens@stpetershyd.com" class="contact-icon">
+        <i class="fa-solid fa-envelope"></i>
+    </a>
+
+    <a href="tel:+918977059315" class="contact-icon">
+        <i class="fa-solid fa-phone"></i>
+    </a>
+
+</div>
+
+
+</section>
+
+<footer class="footer">
+    &copy; <?php echo date('Y'); ?> SPECANCIENS • All rights reserved
+</footer>
+
+<!------javascript--------------->
+<script>
+document.querySelectorAll('.toggle-sessions').forEach(button => {
+    button.addEventListener('click', () => {
+        const list = button.nextElementSibling; // ONLY the list right after THIS button
+
+        if(list.style.display === 'block'){
+            list.style.display = 'none';
+            button.textContent = "View Details";
+        } else {
+            list.style.display = 'block';
+            button.textContent = "Hide Details";
+        }
+    });
+});
+</script>
+
+
+
+
+</body>
+</html> 
